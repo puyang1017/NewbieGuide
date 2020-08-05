@@ -223,8 +223,13 @@ public class GuideLayout extends FrameLayout {
         }
         List<RelativeGuide> relativeGuides = guidePage.getRelativeGuides();
         if (relativeGuides.size() > 0) {
+            OnLayoutInflatedListener inflatedListener = guidePage.getOnLayoutInflatedListener();
             for (RelativeGuide relativeGuide : relativeGuides) {
-                addView(relativeGuide.getGuideLayout((ViewGroup) getParent(), controller));
+                View view = relativeGuide.getGuideLayout((ViewGroup) getParent(), controller);
+                if (inflatedListener != null) {
+                    inflatedListener.onLayoutInflated(view, controller);
+                }
+                addView(view);
             }
         }
     }
